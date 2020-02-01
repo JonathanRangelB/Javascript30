@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="65" src="sounds/clap.wav" preload="auto" controls></audio>
   <audio data-key="83" src="sounds/hihat.wav"></audio>
   <audio data-key="68" src="sounds/kick.wav"></audio>
   <audio data-key="70" src="sounds/openhat.wav"></audio>
@@ -75,7 +75,7 @@
     }
     audio.currentTime = 0 //going to reset the playback of the audio to 0 (begining of the audio itself)
     audio.play()
-    key.classList.toggle('playing')
+    key.classList.add('playing')
   }
 
   function removeTransition(e) {
@@ -85,8 +85,9 @@
     //"this" is the element "e" we got from the event transitionend
     this.classList.remove('playing')
   }
-  const keys = document.querySelectorAll('.key');
-  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+  //const keys = document.getElementsByClassName('key'); //regresa un HTMLCollection
+  const keys = document.querySelectorAll('.key'); //regresa un NodeList
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition))//nodelist has forEach proto, htmlelement has not
   
 </script>
 
