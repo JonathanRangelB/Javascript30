@@ -45,6 +45,10 @@
       <kbd>L</kbd>
       <span class="sound">tink</span>
     </div>
+    <div data-key="186" class="key">
+      <kbd>Ñ</kbd>
+      <span class="sound">ñee</span>
+    </div>
   </div>
 
   <audio data-key="65" src="sounds/clap.wav"></audio>
@@ -56,6 +60,7 @@
   <audio data-key="74" src="sounds/snare.wav"></audio>
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
+  <audio data-key="186" src="sounds/clap.wav"></audio>
 
 <script>
   window.addEventListener("keydown", playSound)
@@ -64,6 +69,7 @@
     //like in CSS we can get query the attibutes from an element using []
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
     const key = document.querySelector(`div[data-key="${e.keyCode}"]`)
+    //console.log(e.keyCode);
     if (!audio) {
       return;
     }
