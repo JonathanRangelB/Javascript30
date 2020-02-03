@@ -1,6 +1,6 @@
 # Javascript30
 
-![logo](https://imgur.com/O2Ul6N6)
+![logo](https://i.imgur.com/O2Ul6N6.png)
 
 Wes Bos Javascript challenge, 30 projects, 30 days, tons of fun
 
