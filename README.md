@@ -1,4 +1,7 @@
 # Javascript30
+
+![logo](https://imgur.com/O2Ul6N6)
+
 Wes Bos Javascript challenge, 30 projects, 30 days, tons of fun
 
 source page for this challenge is this https://javascript30.com/
