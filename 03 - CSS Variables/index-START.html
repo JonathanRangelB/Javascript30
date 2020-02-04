@@ -26,6 +26,27 @@
       misc styles, nothing to do with CSS variables
     */
 
+    /* To declare variables, we need to put them on a element, on this case root,
+    the highest element on css. To declare a variable we need to put double dash dash --
+    this is the way we declare variables on css */
+    :root{
+      --base: #ffc600;
+      --spacing: 20px;
+      --blur: 10px;
+    }
+
+    /* In order to use variables on css, we need to use the funcion var() for the value
+    of or css attribute */
+    img{
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
+
     body {
       text-align: center;
       background: #193549;
@@ -45,6 +66,23 @@
   </style>
 
   <script>
+    const inputs = document.querySelectorAll('.controls input')
+
+    function handleUpdate(){
+      /* this.datase.<data-something> is an object that holds all html attributes with the
+      prefix data- of the given element, in this case is the suffix attribute
+      present on 2 of the 3 elements on the current HTML */
+      const suffix = this.dataset.sizing || ''; /* if data-suffix is present will populate, otherwise will be an empty string */
+      
+      /* Whit the next line we can set a property of an element, takes 2 arguments */
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+    }
+
+    /* I need to put 2 events because the change will only take effect once I let go the
+    click over the control, and the mousemove will be triggered every time the mouse
+    is over the control element */
+    inputs.forEach(input => input.addEventListener('change', handleUpdate))
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate))
   </script>
 
 </body>
