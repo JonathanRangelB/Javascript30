@@ -19,42 +19,67 @@ const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb
 
 const cities = []
 
-fetch(endpoint)
-  .then(response => response.json())
-  .then(data => cities.push(...data))
+fetch(endpoint) // fetch regresa una promesa
+  .then(response => response.json()) // cachamos la promesa y esperamos otra por el .json()
+  .then(data => cities.push(...data)) // usamos el spread para meter todo en la const cities
   // un equivalente seria con cities como let y no const de la siguiente manera:
   // .then(data => cities = [...data])
 
+// Basandose en la informacion contenida en el Array de cities, buscara el string especifico
+// dentro de los objetos que son los elementos del arreglo, regresaondo un arreglo nuevo
+// gracias al metodo filter
 function findMatches(wordToMatch, cities) {
    return cities.filter( place => {
-      const regex = new RegExp(wordToMatch, 'gi')
-      return place.city.match(regex) || place.state.match(regex)
+      const regex = new RegExp(wordToMatch, 'gi') // g=global, i=insensitive (que no sea case sensitive)
+      return place.city.match(regex) || place.state.match(regex) // regresamos uno u otro
    })
 }
 
+// Esta función lo que hace es que divide el de 3 en 3 los numeros con una coma ,
 function numberWithCommas(value) {
    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+// Función core del proyecto, manda buscar los datos en el array, crea los li junto a su contenido
 function displayMatches() {
    const matchArray = findMatches(this.value, cities)
    const html = matchArray.map(place => {
       const regex = new RegExp(this.value, 'gi')
-      const highLightCity = place.city.replace(regex, `<span class="hl">${this.value}</span>`)
-      const highLightState = place.state.replace(regex, `<span class="hl">${this.value}</span>`)
+      const highLightCity = place.city.replace(regex, `<span class="hl">${this.value}</span>`) // para resaltar la palabra city que buscamos
+      const highLightState = place.state.replace(regex, `<span class="hl">${this.value}</span>`) // para resaltar la palabra state que buscamos
       return `
          <li>
             <span class="name">${highLightCity}, ${highLightState}</span>
             <span class="population">${numberWithCommas(place.population)}</span>
          </li>`;
    }).join('')
+   // usamos .join('') porque lo que regresa map es un Array,
+   // y al colocarle esto lo hara un string muy grande,
+   //esto porque el HTML no sabe de Arrays pero si de strings
+
+   // aqui ya solo modificamos el ul de nuestro HTML original con los resultados
    suggestions.innerHTML = html;
 }
 
-const searchInput = document.querySelector('.search');
-const suggestions = document.querySelector('.suggestions');
+const searchInput = document.querySelector('.search'); // el campo de texto a usar
+const suggestions = document.querySelector('.suggestions'); // la ul que llenaremos
 //searchInput.addEventListener('change', displayMatches)
-searchInput.addEventListener('keyup', displayMatches)
+
+// se ejecuta cada vez que se deja de presionar una tecla
+// Esta linea es la que ejecuta todo el código de arriba
+searchInput.addEventListener('keyup', displayMatches) 
+
+
+// las siguientes lineas es para prevenir que cada vez que se le de enter al campo de texto,
+// o lo que seria lo mismo si el form tuviera un boton con un type="sumbit" se recarge
+// la página borrando todo nuestro estado ya establecido
+const form = document.querySelector('.search-form')
+
+function preventSubmit(e) {
+   e.preventDefault() // esto es lo que realmente detiene el submit
+}
+
+form.addEventListener('submit', preventSubmit)
 
 </script>
 </body>
