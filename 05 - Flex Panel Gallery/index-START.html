@@ -26,6 +26,7 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
@@ -43,6 +44,11 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -51,12 +57,28 @@
     .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
     .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
 
-    /* Flex Children */
+    /* Flex Item */
     .panel > * {
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
     }
+
+    /*
+    Difference between <,> and space selectors on CSS
+    A > B will only select B that are direct children to A (that is, there are no other elements inbetween).
+    A B will select any B that are inside A, even if there are other elements between them.
+    */
+    .panel > *:first-child{ transform: translateY(-100%); }
+    .panel.open-active > *:first-child{ transform: translateY(0%); }
+    .panel > *:last-child{ transform: translateY(100%); }
+    .panel.open-active > *:last-child{ transform: translateY(0%); }
+    /* using translateY in this case will move out of screen the element*/
 
     .panel p {
       text-transform: uppercase;
@@ -71,6 +93,7 @@
 
     .panel.open {
       font-size: 40px;
+      flex: 5;
     }
 
   </style>
@@ -105,10 +128,26 @@
   </div>
 
   <script>
+    const panels = document.querySelectorAll('.panel')
+
+    function toggleOpen() {
+      this.classList.toggle('open')
+    }
+
+    function toggleActive(event) {
+      // there's a bug in saffary where flex and flexgrow are different, in this case we
+      // can check if the property name includes the word flex, with that we can include
+      // all browsers, or we can use simply "font-size" since that's the other transition
+      // we are using for the panels to grow
+      if (event.propertyName.includes('flex')) {
+        this.classList.toggle('open-active')
+      }
+    }
+
+    panels.forEach(element => element.addEventListener('click', toggleOpen));
+    panels.forEach(element => element.addEventListener('transitionend', toggleActive));
 
   </script>
-
-
 
 </body>
 </html>
