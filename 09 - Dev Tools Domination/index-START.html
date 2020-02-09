@@ -16,30 +16,73 @@
       p.style.color = '#BADA55';
       p.style.fontSize = '50px';
     }
+    // Last portion of code was to demostrate how can we trace down some changes on an element, just to know where exactly JS is changing that, and if you dont know where to look, you can inspect the element, and right click on the "Elements" tab an select "Breack on =>" and you can 3 different ways to check where specifically your element was changed into JS
 
     // Regular
+    console.log('Hello world');
 
     // Interpolated
+    console.log('Hello im a %s string', 'awesome');
+    //equivalent to this is:
+    const aw = 'awesome'
+    console.log(`Hello im a ${aw} string`);
 
     // Styled
+    console.log('%cHello this is an styled text', 'font-size: 20px; color: red;');
 
     // warning!
+    console.warn('this is a warning')
 
     // Error :|
+    console.error('this is an error')
 
     // Info
+    console.info('this is just information')
 
     // Testing
+    const p = document.querySelector('p')
+    console.assert(p === 2, 'This is wrong, p is not equals to 2')
+    console.assert(p.classList.contains('ouch'), 'P doesn`t contain class ouch')
 
     // clearing
+    console.clear()
 
     // Viewing DOM Elements
+    // console.dir(p) // this will show all the mathods an propertyes of an element
 
     // Grouping together
+    dogs.forEach(dog => {
+    console.group(`${dog.name}`) // es mejor usar groupCollapsed
+      console.log(`This is ${dog.name}`);
+      console.log(`This is ${dog.name} and he's ${dog.age}`);
+      console.log(`This is ${dog.name} and he's ${dog.age * 7} dog's age`);
+    console.groupEnd(`${dog.name}`)
+    });
 
     // counting
+    // console.count('jonathan')
+    // console.count('jonathan')
+    // console.count('Elvia')
+    // console.count('Elvia')
+    // console.count('Elvia')
+    // console.count('jonathan')
+    // console.count('Elvia')
+    // console.count('Elvia')
+    // console.count('Elvia')
+    // console.count('jonathan')
 
     // timing
+    console.time('timeFrame')
+    fetch('https://api.github.com/users/jonathanrangelb')
+    .then(data => data.json())
+    .then(data => {
+      console.log(data)
+      console.timeEnd('timeFrame')
+      })
+    
+
+    // Table
+    console.table(dogs)
 
   </script>
 </body>
