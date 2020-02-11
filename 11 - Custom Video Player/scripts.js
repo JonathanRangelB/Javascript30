@@ -40,8 +40,9 @@ function handleProgress(e) {
 
 function handleScrub(e) {
   // We need to get the current cursor position in our progress element, that's possible with e.offsetX, then we need to divide that against the width of the element with this.offsetWidth, finally we can multiply the result against the video.duration because that's our 100% of our equation here
-  const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
-  console.log(this === progress); // Strange behaviour, this is for sure equals to progress, but when that happens on the mousemove event that changes, and appears as false, but on the click event, that's true, that's whi I need to use progress on the math operation abobe, using this will return always undefined on the mousemove.
+  const scrubTime = (e.offsetX / e.target.offsetWidth) * video.duration;
+  //const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration; // same as above line, the I preffer the second one to be Honest
+  // console.log(`${e.target} and ${progress}`); // Here I found a problem and it's solution, when we call a function due a trigger of an event, the "this" changes to window, in order to avoid that, we have the event "e" in this case to tell us wich element triggered the function, so, instead using this.offsetWidth, we should use e.target, or e.srcElement, any of those can be used to determine the caller element of a function
 
   video.currentTime = scrubTime;
 }
@@ -80,12 +81,12 @@ ranges.forEach(element => {
   element.addEventListener("mouseup", () => (mouseClicked = false));
 });
 progress.addEventListener("click", handleScrub);
-progress.addEventListener("mousemove", e => {
-  if (mouseClicked) {
-    handleScrub(e);
-  }
-});
+// progress.addEventListener("mousemove", e => {
+//   if (mouseClicked) {
+//     handleScrub(e);
+//   }
+// });
 // Next line is the short way to write above code, handleScrub(e) will not run unless mouseClicked is true, evaluates from left to right
-// progress.addEventListener("mousemove", e => mouseClicked && handleScrub(e));
+progress.addEventListener("mousemove", e => mouseClicked && handleScrub(e));
 progress.addEventListener("mouseup", () => (mouseClicked = false));
 progress.addEventListener("mousedown", () => (mouseClicked = true));
