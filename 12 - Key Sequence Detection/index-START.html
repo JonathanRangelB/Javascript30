@@ -7,6 +7,22 @@
 </head>
 <body>
 <script>
+const pressed = [];
+const secretWord = "aniela";
+
+function handleEaster(e) {
+  pressed.push(e.key)
+  // Splice(startIndex,#ofElementsToDelete), if a negative index is given as parameter, it will start from the right of the index instead of the defaul left
+  //console.log(pressed)
+  pressed.splice(-secretWord.length -1, pressed.length - secretWord.length)
+  if (pressed.join('').includes(secretWord)) {
+    console.log('Ding Ding!');
+    cornify_add()
+  }
+  //console.log(pressed);
+}
+
+window.addEventListener('keyup', handleEaster)
 </script>
 </body>
 </html>
