@@ -2,6 +2,10 @@ html {
   box-sizing: border-box;
 }
 
+:root{
+  --primaryColor: #ffc600;
+}
+
 *, *:before, *:after {
   box-sizing: inherit;
 }
@@ -55,7 +59,7 @@ body {
 }
 
 .player__button:focus {
-  border-color: #ffc600;
+  border-color: var(--primaryColor);
 }
 
 .player__slider {
@@ -99,9 +103,21 @@ body {
 
 .progress__filled {
   width: 50%;
-  background: #ffc600;
+  background: var(--primaryColor);
   flex: 0;
   flex-basis: 0%;
+}
+
+.fullscreen {
+  background: none;
+  max-width: 50px;
+  cursor: pointer;
+  color: white;
+  border: none;
+}
+
+.fullscreen:focus {
+  border-color: var(--primaryColor);
 }
 
 /* unholy css to style input type="range" */
@@ -131,7 +147,7 @@ input[type=range]::-webkit-slider-thumb {
   height: 15px;
   width: 15px;
   border-radius: 50px;
-  background: #ffc600;
+  background: var(--primaryColor);
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -3.5px;
@@ -157,6 +173,10 @@ input[type=range]::-moz-range-thumb {
   height: 15px;
   width: 15px;
   border-radius: 50px;
-  background: #ffc600;
+  background: var(--primaryColor);
   cursor: pointer;
+}
+
+:fullscreen{
+  background-color: var(--primaryColor);
 }
